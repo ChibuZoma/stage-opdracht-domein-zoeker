@@ -1,16 +1,19 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import App from '../App.vue';
-
-const BASE_URL = import.meta.env.VITE_APP_BACKEND_URL;
+import TLD from '../components/TLD.vue';
+import HomeView from '../views/HomeView.vue';
 
 const router = createRouter({
-  history: createWebHistory(BASE_URL),
+  history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
+    {
+      path: '/components/tld',
+      name: 'tld',
+      component: TLD
+    },
     {
       path: '/',
       name: 'home',
-      component: App,
-      meta: { requiresAuth: false }
+      component: HomeView
     },
   ]
 })
