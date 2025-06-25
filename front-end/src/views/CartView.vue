@@ -39,12 +39,12 @@ function removeTLDFromCart(tld: TLD): void {
 
 function calculateFinalPrices(): void {
     calculateTotal();
-    calculateSubTotal();
     calculateBTW();
+    calculateSubTotal();
 }
 
 function calculateSubTotal(): void {
-    subTotal.value = parseFloat((total.value / (btwPercent + 100) * 100).toFixed(2));
+    subTotal.value = parseFloat((total.value - btw.value).toFixed(2));
 }
 
 function calculateBTW(): void {
