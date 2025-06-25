@@ -2,6 +2,7 @@
 import { onMounted, ref, type Ref } from 'vue';
 import { RootDomain } from '../models/RootDomain.ts';
 import type { TLD } from '../models/TLD';
+import PageHeader from '../components/PageHeader.vue';
 
 const MINTY_API_URL: string = import.meta.env.VITE_APP_MINTY_API_URL;
 const extensionList: string[] = ["com", "nl", "be", "fr", "de", "ch", "pl", "jp", "kr", "io", "net", "gov"];
@@ -13,7 +14,6 @@ const rootDomainList: Ref<RootDomain[]> = ref([]);
 const showTable: Ref<boolean> = ref(false);
 
 onMounted(() => {
-    console.log("mounted")
     updateCartFromSession();
 });
 
@@ -73,6 +73,7 @@ function addToCart(tld: TLD): void {
 </script>
 
 <template>
+    <PageHeader />
     <div>
         <input type="text" v-model="domainName">
         <button @click="submitDomainName" class="btn btn-success">Submit</button>
@@ -88,12 +89,12 @@ function addToCart(tld: TLD): void {
                 <tr v-for="tld of tldList">
                     <td>{{tld.domain}}</td>
                     <td>{{tld.status}}</td>
-                    <td v-if="tld.price.product.currency === 'EUR'">€{{tld.price.product.price}}</td>
-                    <td v-else-if="tld.price.product.currency === 'USD'">${{tld.price.product.price}}</td>
-                    <td v-else-if="tld.price.product.currency === 'CAD'">CA${{tld.price.product.price}}</td>
-                    <td v-else-if="tld.price.product.currency === 'AUD'">AU${{tld.price.product.price}}</td>
-                    <td v-else-if="tld.price.product.currency === 'JPY'">¥{{tld.price.product.price}}</td>
-                    <td v-else-if="tld.price.product.currency === 'KRW'">₩{{tld.price.product.price}}</td>
+                    <td v-if="tld.price.product.currency === 'EUR'">€{{tld.price.product.price.toFixed(2)}}</td>
+                    <td v-else-if="tld.price.product.currency === 'USD'">${{tld.price.product.price.toFixed(2)}}</td>
+                    <td v-else-if="tld.price.product.currency === 'CAD'">CA${{tld.price.product.price.toFixed(2)}}</td>
+                    <td v-else-if="tld.price.product.currency === 'AUD'">AU${{tld.price.product.price.toFixed(2)}}</td>
+                    <td v-else-if="tld.price.product.currency === 'JPY'">¥{{tld.price.product.price.toFixed(2)}}</td>
+                    <td v-else-if="tld.price.product.currency === 'KRW'">₩{{tld.price.product.price.toFixed(2)}}</td>
                     <td v-else>-</td>
                     <td>
                         <button v-if="cartContainsDomain(tld)" class="btn btn-warning disabled">Add To Cart</button>
