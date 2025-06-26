@@ -9,7 +9,7 @@ class OrderService {
 
         $order = new Order($data);
 
-        QueryFunction::test();
+        QueryFunction::addOrder($order);
 
         return json_encode($order->getTLDList());
     }
