@@ -3,10 +3,13 @@ import { onMounted, ref, type Ref } from 'vue';
 import type { TLD } from '../models/TLD';
 import PageHeader from '../components/PageHeader.vue';
 
+const BACKEND_URL: string = import.meta.env.VITE_APP_BACKEND_URL;
 const btwPercent: number = 21;
 
 const cart: Ref<TLD[]> = ref([]);
 const showTable: Ref<boolean> = ref(false);
+const orderIsAdded: Ref<boolean> = ref(false);
+const checkOutIsClicked: Ref<boolean> = ref(false);
 
 const subTotal: Ref<number> = ref(0);
 const btw: Ref<number> = ref(0);
@@ -14,7 +17,6 @@ const total: Ref<number> = ref(0);
 
 onMounted(() => {
     updateCartFromSession();
-    calculateFinalPrices();
 });
 
 function updateCartFromSession(): void {
@@ -25,6 +27,7 @@ function updateCartFromSession(): void {
     } else {
         cart.value = JSON.parse(sessionCart);
         showTable.value = true;
+        calculateFinalPrices();
     }
 }
 
@@ -60,13 +63,35 @@ function calculateTotal(): void {
     total.value = parseFloat(totalLocal.toFixed(2));
 }
 
-function checkOut(): void {
+function resetCart(): void {
+    sessionStorage.setItem("cart", JSON.stringify([]));
+    updateCartFromSession();
+}
+
+async function checkOut(): Promise<void> {
     console.log("checkout");
+    checkOutIsClicked.value = true;
+
+    try {
+        const response: Response = await fetch(`${BACKEND_URL}/api/order`, {
+            method: 'POST',
+            body: JSON.stringify(cart.value)
+        });
+
+        if (response.ok) {
+            console.log("Order added successfully");
+            orderIsAdded.value = true;
+            resetCart();
+        }
+    } catch (error) {
+        console.error("Something went wrong when trying to fetch the data.", error);
+    }
 }
 </script>
 
 <template>
     <PageHeader />
+    <h2 v-if="orderIsAdded === true">Order Added Successfully</h2>
     <table>
         <tbody>
             <tr>
@@ -103,7 +128,7 @@ function checkOut(): void {
                 <td>Total</td>
                 <td></td>
                 <td>€{{ total.toFixed(2) }}</td>
-                <button v-if="cart.length > 0" @click="checkOut" class="btn btn-success">Check Out</button>
+                <button v-if="cart.length > 0 && !checkOutIsClicked" @click="checkOut" class="btn btn-success">Check Out</button>
                 <button v-else class="btn btn-success disabled">Check Out</button>
             </tr>
         </tbody>
