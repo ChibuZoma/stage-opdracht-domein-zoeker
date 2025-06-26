@@ -3,14 +3,18 @@
 require __DIR__ . '/../models/Order.php';
 
 class OrderService {
-    public function addOrder() {
+    private OrderRepo $orderRepo;
+
+    public function __construct(OrderRepo $orderRepo) {
+        $this->orderRepo = $orderRepo;
+    }
+
+    public function addOrder(): void {
         $rawData = file_get_contents("php://input");
         $data = json_decode($rawData, true);
 
         $order = new Order($data);
 
-        QueryFunction::addOrder($order);
-
-        return json_encode($order->getTLDList());
+        $this->orderRepo->addOrder($order);
     }
 }

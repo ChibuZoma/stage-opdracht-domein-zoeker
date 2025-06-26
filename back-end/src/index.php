@@ -4,7 +4,6 @@ require __DIR__ . '/database/PDOConnection.php';
 require __DIR__ . '/database/QueryFunction.php';
 
 $request = $_SERVER['REQUEST_URI'];
-$method = $_SERVER['REQUEST_METHOD'];
 
 switch ($request) {
     case '/api/order':
@@ -12,8 +11,8 @@ switch ($request) {
         require __DIR__ . '/service/OrderService.php';
         require __DIR__ . '/repository/OrderRepo.php';
         
-        // $orderRepo = new orderRepo();
-        $orderService = new OrderService();
+        $orderRepo = new orderRepo();
+        $orderService = new OrderService($orderRepo);
         $orderController = new OrderController($orderService);
 
         $orderController->router();

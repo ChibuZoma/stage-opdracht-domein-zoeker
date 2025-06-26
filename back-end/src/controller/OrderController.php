@@ -13,12 +13,6 @@ class OrderController {
         $method = $_SERVER['REQUEST_METHOD'];
 
         switch ($method) {
-            case 'GET':
-                // Return a list of users
-                var_dump("test");
-                echo json_encode(['number' => 42]);
-                break;
-
             case 'POST':
                 $this->addOrder();
                 break;
@@ -32,6 +26,6 @@ class OrderController {
 
     // POST
     private function addOrder(): void {
-        echo $this->orderService->addOrder();
+        $this->orderService->addOrder();
     }
 }
