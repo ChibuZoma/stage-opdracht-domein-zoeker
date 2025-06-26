@@ -8,8 +8,35 @@ class OrderController {
     public function __construct(OrderService $orderService) {
         $this->orderService = $orderService;
     }
+
+    // POST
+    private function addOrder(): void {
+        $this->orderService->addOrder();
+    }
+
+    // GET
+    private function getAllOrders(): array {
+        echo json_encode($this->orderService->getAllOrders());
+    }
     
-    public function router() {
+    public function router(): void {
+        $request = $_SERVER['REQUEST_URI'];
+
+        switch ($request) {
+            case '/api/order':
+                $this->routerDefault();
+                break;
+            case '/api/order/all':
+                $this->routerAll();
+                break;
+            default:
+                http_response_code(404);
+                echo json_encode(['error' => 'Not found']);
+                break;
+        }
+    }
+
+    private function routerDefault(): void {
         $method = $_SERVER['REQUEST_METHOD'];
 
         switch ($method) {
@@ -24,8 +51,18 @@ class OrderController {
         }
     }
 
-    // POST
-    private function addOrder(): void {
-        $this->orderService->addOrder();
+    private function routerAll(): void {
+        $method = $_SERVER['REQUEST_METHOD'];
+
+        switch ($method) {
+            case 'GET':
+                $this->getAllOrders();
+                break;
+
+            default:
+                http_response_code(405);
+                echo json_encode(['error' => 'Method not allowed']);
+                break;
+        }
     }
 }

@@ -5,8 +5,8 @@ require __DIR__ . '/database/QueryFunction.php';
 
 $request = $_SERVER['REQUEST_URI'];
 
-switch ($request) {
-    case '/api/order':
+switch (true) {
+    case str_contains($request, '/api/order'):
         require __DIR__ . '/controller/OrderController.php';
         require __DIR__ . '/service/OrderService.php';
         require __DIR__ . '/repository/OrderRepo.php';

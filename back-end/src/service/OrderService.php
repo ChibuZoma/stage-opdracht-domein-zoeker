@@ -17,4 +17,8 @@ class OrderService {
 
         $this->orderRepo->addOrder($order);
     }
+
+    public function getAllOrders(): array {
+        return $this->orderRepo->getAllOrders();
+    }
 }

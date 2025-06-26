@@ -2,7 +2,7 @@
 
 require __DIR__ . '/Price.php';
 
-class TLD {
+class TLD implements JsonSerializable {
     private string $domain;
     private string $status;
     private Price $price;
@@ -11,5 +11,13 @@ class TLD {
         $this->domain = $domain;
         $this->status = $status;
         $this->price = $price;
+    }
+
+    public function jsonSerialize(): mixed {
+        return [
+            'domain' => $this->domain,
+            'status' => $this->status,
+            'price' => $this->price
+        ];
     }
 }
