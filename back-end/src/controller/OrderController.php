@@ -12,6 +12,7 @@ class OrderController {
     // POST
     private function addOrder(): void {
         $this->orderService->addOrder();
+        http_response_code(204);
     }
 
     // GET

@@ -12,7 +12,6 @@ class QueryFunction {
 
         try {
             $stmt->execute();
-            echo "New order created successfully.";
 
             $orderId = $pdo->lastInsertId();
             $query = "INSERT INTO tlds (domain, status, price, currency, order_id) VALUES (:domain, :status, :price, :currency, :order_id)";
@@ -32,7 +31,6 @@ class QueryFunction {
                     $currency = $tld['price']['product']['currency'];
                     
                     $stmt->execute();
-                    echo "New tld created successfully.";
                     
                 } catch (PDOException $e) {
                     echo "Error: " . $e->getMessage();
@@ -87,7 +85,7 @@ class QueryFunction {
                         $dbOrder = new DataBaseOrder($id["id"], $tldList);
                         array_push($dbOrderList, $dbOrder);
                     }
-                    
+
                 } catch (PDOException $e) {
                     echo "Error: " . $e->getMessage();
                 }
