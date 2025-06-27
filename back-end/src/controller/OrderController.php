@@ -15,7 +15,7 @@ class OrderController {
     }
 
     // GET
-    private function getAllOrders(): array {
+    private function getAllOrders(): void {
         echo json_encode($this->orderService->getAllOrders());
     }
     

@@ -1,7 +1,7 @@
 <?php
 
 require __DIR__ . '/../models/DataBaseOrder.php';
-require __DIR__ . '/../models/TLD.php';
+// require __DIR__ . '/../models/TLD.php';
 
 class QueryFunction {
     static function addOrder(Order $order) {
@@ -80,10 +80,9 @@ class QueryFunction {
                                 )
                             )
                         );
-
-                        array_push($tldList, $item);
+                        array_push($tldList, $tld);
                     }
-
+                    
                     if (count($tldList) > 0) {
                         $dbOrder = new DataBaseOrder($id["id"], $tldList);
                         array_push($dbOrderList, $dbOrder);

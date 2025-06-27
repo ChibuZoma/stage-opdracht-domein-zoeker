@@ -1,5 +1,7 @@
 <?php
 
+require __DIR__ . '/TLD.php';
+
 class DataBaseOrder implements JsonSerializable {
     private int $id;
     private array $tldList;
