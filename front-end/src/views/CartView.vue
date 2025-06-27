@@ -84,7 +84,7 @@ async function checkOut(): Promise<void> {
             resetCart();
         }
     } catch (error) {
-        console.error("Something went wrong when trying to fetch the data.", error);
+        console.error("Something went wrong when trying to post the data.", error);
     }
 }
 </script>
