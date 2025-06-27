@@ -97,7 +97,7 @@ function addToCart(tld: TLD): void {
                     <td v-else-if="tld.price.product.currency === 'KRW'">₩{{tld.price.product.price.toFixed(2)}}</td>
                     <td v-else>-</td>
                     <td>
-                        <button v-if="cartContainsDomain(tld)" class="btn btn-warning disabled">Add To Cart</button>
+                        <button v-if="cartContainsDomain(tld)" class="btn btn-success disabled">Add To Cart</button>
                         <button v-else-if="tld.status === 'free'" @click="addToCart(tld)" class="btn btn-success">Add To Cart</button>
                         <button v-else class="btn btn-danger disabled">Add To Cart</button>
                     </td>
