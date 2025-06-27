@@ -4,7 +4,7 @@ class PDOConnection {
         $servername = "localhost";  // MySQL server
         $username = "root";         // MySQL username
         $password = "";             // MySQL password (empty in this example)
-        $dbname = "domein_zoeker";         // The database you want to connect to
+        $dbname = "domein_zoeker";  // The database you want to connect to
 
         try {
             // Create connection

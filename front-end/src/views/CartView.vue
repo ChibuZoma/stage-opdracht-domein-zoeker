@@ -69,7 +69,6 @@ function resetCart(): void {
 }
 
 async function checkOut(): Promise<void> {
-    console.log("checkout");
     checkOutIsClicked.value = true;
 
     try {
@@ -91,6 +90,7 @@ async function checkOut(): Promise<void> {
 
 <template>
     <PageHeader />
+    <h2>Cart</h2>
     <h2 v-if="orderIsAdded === true">Order Added Successfully</h2>
     <table>
         <tbody>
